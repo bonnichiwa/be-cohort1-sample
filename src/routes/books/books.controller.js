@@ -26,7 +26,44 @@ const postBook = async (req, res) => {
   });
 };
 
+const updateBook = async (req, res) => {
+  const { bookID } = req.params;
+  let foundBook = null;
+
+  const newBooksData = {
+    data: [...booksData.data].map(book => {
+      if (book.bookID === bookID) {
+        book = { bookID, ...req.body };
+        foundBook = book;
+      }
+      return book;
+    })
+  };
+
+  if (!foundBook) {
+    // Create a new book entry if not found
+    await writeFile(
+      "db/greatreads.data.json",
+      JSON.stringify({ data: [...booksData.data, { bookID, ...req.body }] })
+    );
+    res.status(201);
+    return res.json({
+      bookID,
+      ...req.body
+    });
+  } else {
+    // Update book entry if found
+    await writeFile("db/greatreads.data.json", JSON.stringify(newBooksData));
+    res.status(200);
+    return res.json({
+      bookID,
+      ...req.body
+    });
+  }
+};
+
 module.exports = {
   listBooks,
-  postBook
+  postBook,
+  updateBook
 };
