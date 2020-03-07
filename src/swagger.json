@@ -1,0 +1,140 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Great Reads API Documentation"
+  },
+  "host": "localhost:3003",
+  "basePath": "/books",
+  "paths": {
+    "/books": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Get all books",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Got all books"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Books"],
+        "summary": "Add a new book",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "body",
+            "description": "Title of the book we want to create"
+          },
+          {
+            "name": "authors",
+            "in": "body",
+            "description": "Author(s) of the book we want to create"
+          },
+          {
+            "name": "average_rating",
+            "in": "body",
+            "description": "Average rating of the book we want to create"
+          },
+          {
+            "name": "isbn",
+            "in": "body",
+            "description": "ISBN of the book we want to create"
+          },
+          {
+            "name": "isbn13",
+            "in": "body",
+            "description": "ISBN 13 of the book we want to create"
+          },
+          {
+            "name": "# num_pages",
+            "in": "body",
+            "description": "Number of pages of the book we want to create"
+          },
+          {
+            "name": "ratings_count",
+            "in": "body",
+            "description": "Ratings of the book we want to create"
+          },
+          {
+            "name": "text_reviews_count",
+            "in": "body",
+            "description": "Reviews of the book we want to create"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "201": {
+            "description": "New book has been created"
+          }
+        }
+      }
+    },
+    "/books/:bookID": {
+      "put": {
+        "summary": "Update books with given bookID",
+        "tags": ["Books"],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "body",
+            "description": "Title of the book we want to update"
+          },
+          {
+            "name": "authors",
+            "in": "body",
+            "description": "Author(s) of the book we want to update"
+          },
+          {
+            "name": "average_rating",
+            "in": "body",
+            "description": "Average rating of the book we want to update"
+          },
+          {
+            "name": "isbn",
+            "in": "body",
+            "description": "ISBN of the book we want to update"
+          },
+          {
+            "name": "isbn13",
+            "in": "body",
+            "description": "ISBN 13 of the book we want to update"
+          },
+          {
+            "name": "# num_pages",
+            "in": "body",
+            "description": "Number of pages of the book we want to update"
+          },
+          {
+            "name": "ratings_count",
+            "in": "body",
+            "description": "Ratings of the book we want to update"
+          },
+          {
+            "name": "text_reviews_count",
+            "in": "body",
+            "description": "Reviews of the book we want to update"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Book has been updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a book with the given bookID",
+        "tags": ["Books"],
+        "responses": {
+          "200": {
+            "description": "Book has been deleted"
+          },
+          "404": {
+            "description": "Book not found"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,8 @@
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 
 const router = require("./api");
 const { logger } = require("./utils/logger");
@@ -19,6 +21,8 @@ app.use(morgan("tiny", { stream: logger.stream }));
 app.use("/", router);
 
 app.use(errorHandler);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Serve the application at the given port
 app.listen(port, () => {
