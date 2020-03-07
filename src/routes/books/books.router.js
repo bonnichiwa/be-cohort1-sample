@@ -7,6 +7,7 @@ const {
   updateBook,
   deleteBook
 } = require("./books.controller");
+const { validateBody } = require("../../middleware/validate-body");
 
 const router = express.Router();
 
@@ -38,8 +39,8 @@ const booksRequestBodyCheck = [
 ];
 
 router.get("", listBooks);
-router.post("", booksRequestBodyCheck, postBook);
-router.put("/:bookID", booksRequestBodyCheck, updateBook);
+router.post("", booksRequestBodyCheck, validateBody, postBook);
+router.put("/:bookID", booksRequestBodyCheck, validateBody, updateBook);
 router.delete("/:bookID", deleteBook);
 
 module.exports = {
