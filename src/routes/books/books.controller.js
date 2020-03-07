@@ -62,8 +62,33 @@ const updateBook = async (req, res) => {
   }
 };
 
+const deleteBook = async (req, res) => {
+  const { bookID } = req.params;
+
+  const newBooksData = {
+    data: [...booksData.data].filter(book => book.bookID !== bookID)
+  };
+
+  if (newBooksData.data.length === booksData.data.length) {
+    // Send message back if no book is found
+    res.status(404);
+    return res.json({
+      data: "No book found to delete."
+    });
+  } else {
+    // Delete book entry if found
+    await writeFile("db/greatreads.data.json", JSON.stringify(newBooksData));
+    res.status(200);
+    return res.json({
+      bookID,
+      ...req.body
+    });
+  }
+};
+
 module.exports = {
   listBooks,
   postBook,
-  updateBook
+  updateBook,
+  deleteBook
 };
