@@ -1,5 +1,6 @@
 const fs = require("fs");
 const { promisify } = require("util");
+const { validationResult } = require("express-validator");
 
 const booksData = require("../../../db/greatreads.data.json");
 
@@ -12,9 +13,16 @@ const listBooks = (req, res) => {
 };
 
 const postBook = async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
   const bookID = (
     parseInt(booksData.data[booksData.data.length - 1].bookID) + 1
   ).toString();
+
   const newBooksData = {
     data: [...booksData.data, { bookID, ...req.body }]
   };
@@ -27,6 +35,12 @@ const postBook = async (req, res) => {
 };
 
 const updateBook = async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
   const { bookID } = req.params;
   let foundBook = null;
 
